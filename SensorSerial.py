@@ -12,6 +12,7 @@ titleFiltered = []
 #SETUP argparse
 parser = argparse.ArgumentParser(description='Setup Sensor display.')
 parser.add_argument('-c', '--comms', type=str, help="Select the comms port to be used e.g. COM3")
+parser.add_argument('-b', '--baudrate', type=int, help="Select the baudrate for serial comms, default 9600")
 parser.add_argument('-t', '--title', nargs='*', help='sensor titles 4 letters only can be sourced from serial bus')
 args = parser.parse_args()
 
@@ -56,9 +57,15 @@ def convert_List_To_String(lst, seperator=''):
 if __name__ == '__main__':
     #Connect to Comms port of choice or default to COM3
     if args.comms:
-        serialPort = SerialConnect(args.comms)
+        if args.baudrate:
+            serialPort = SerialConnect(args.comms, args.baudrate)
+        else:
+            serialPort = SerialConnect(args.comms)
     else:
-        serialPort = SerialConnect("COM3")
+        if args.baudrate:
+            serialPort = SerialConnect("COM3", args.baudrate)
+        else:
+            serialPort = SerialConnect("COM3")
     #Use given sensor titles or use default AAAA BBBB CCCC
     if args.title:
         titles = args.title
