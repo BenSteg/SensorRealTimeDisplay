@@ -1,5 +1,5 @@
 # serialSensorRTDisplay
-displays on one dynamic line sensor readout for integers &amp; binary. Using any serial bus transfer transfer data in the following form from device to computer running this code.  
+Displays on one dynamic line sensor readout for integers &amp; binary. Using any serial bus transfer transfer data in the following form from device to computer running this code.  
   
 TITLE_1,sensor_value_1,TITLE_2,sensor_value_2,...,TITLE_n,sensor_value_n,\n  
   
@@ -13,10 +13,12 @@ TFHS --- TFLS --- WFSw --- BPRP
 0 ------ 0 ------ 0 ------ 0
 ```  
 ## Dependents
-
+  
 Argparse  
 Serial  
 Numpy  
+  
+Python 3.8.8
 
 ## Arguments
 Arguments are optional, the first argument '-c' is used for selecting the serial bus comms port being used. By default the program will connect to COM3 (can change this in the code if desired). However, any com port can be selected as shown below where COM2 is selected.  
@@ -27,7 +29,11 @@ Arguments are optional, the first argument '-c' is used for selecting the serial
 connected to Serial: COM2
 ```  
   
-The second argument '-t' is for selecting the sensors you want to see. By default all sensor readouts will be displayed dynamically. by using '-t' you can select which sensors are displayed. Example of this is shown below.
+The second argument '-b' is for the baudrate, can specify the specific baudrate needed for the serial communications. Default baudrate is 9600.  
+```cmd
+>py SensorSerial.py -b 9600
+```  
+The third argument '-t' is for selecting the sensors you want to see. By default all sensor readouts will be displayed dynamically. by using '-t' you can select which sensors are displayed. Example of this is shown below.
 
 ```cmd
 >py SensorSerial.py
@@ -38,7 +44,7 @@ TFHS --- TFLS --- WFSw --- BPRP
 0 ------ 0 ------ 0 ------ 0
 ```
 
-And when '-t' is used.  
+And when '-t' is used. Note titles do not need to be in any order. 
 
 ```cmd
 >py SensorSerial.py -t TFHS WFSw TFLS
