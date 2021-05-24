@@ -25,6 +25,11 @@ parser.add_argument('-t',
                     serial bus')
 args = parser.parse_args()
 
+#Connect to serial port, either using default values or argument values
+serialPort = setupSerial(args.comms, args.baudrate)
+#Check Argument titles are correct length == 4
+checkTitleLengths(args.title)
+
 while True:
     #Check serial buffer has been filled before proceeding with function
     if(serialPort.in_waiting > 0):
