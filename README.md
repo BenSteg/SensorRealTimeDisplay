@@ -1,4 +1,4 @@
-# serialSensorRTDisplay
+# Sensor Real Time Display
 Displays on one dynamic line sensor readout for integers &amp; binary. Using any serial bus transfer transfer data in the following form from device to computer running this code.  
   
 TITLE_1,sensor_value_1,TITLE_2,sensor_value_2,...,TITLE_n,sensor_value_n,\n  
