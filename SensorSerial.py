@@ -25,32 +25,24 @@ parser.add_argument('-t',
                     serial bus')
 args = parser.parse_args()
 
-if __name__ == '__main__':
-    #Connect ot serial port, either using default values or argument values
-    serialPort = setupSerial(args.comms, args.baudrate)
-    #show only the sensor specified in the arguments or show all sensor values 
-    #from serial
-    checkTitleLengths(args.title)
-
-    while True:
-        #Check serial buffer has been filled before proceeding with function
-        if(serialPort.in_waiting > 0):
-            serialString = serialPort.readline()
-            ardtitles, sensorValue = splitSerialData(serialString)
-            if args.title:
-                _, ind_ardtitles, _ = np.intersect1d(ardtitles, 
-                                                    args.title, 
-                                                    return_indices=True)
-                printArgumentTitles(ind_ardtitles, ardtitles)               
-                for i in ind_ardtitles:
-                    sensorValuesFiltered.append(sensorValue[i])
-                #Need to convert list to numpy array otherwise dynamic 
-                #printing wont work.
-                sensorStrArray = np.array(sensorValuesFiltered)
-                showOutputSingleLine(sensorStrArray)
-                sensorValuesFiltered.clear()
-            
-            else:
-                printSerialTitles(ardtitles)
-                #have to remove last item in ardtitles as it is \n
-                showOutputSingleLine(sensorValue[:len(ardtitles[:-1])])
+while True:
+    #Check serial buffer has been filled before proceeding with function
+    if(serialPort.in_waiting > 0):
+        serialString = serialPort.readline()
+        ardtitles, sensorValue = splitSerialData(serialString)
+        if args.title:
+            _, ind_ardtitles, _ = np.intersect1d(ardtitles, 
+                                                args.title, 
+                                                return_indices=True)
+            printArgumentTitles(ind_ardtitles, ardtitles)               
+            for i in ind_ardtitles:
+                sensorValuesFiltered.append(sensorValue[i])
+            #Need to convert list to numpy array otherwise dynamic 
+            #printing wont work.
+            sensorStrArray = np.array(sensorValuesFiltered)
+            showOutputSingleLine(sensorStrArray)
+            sensorValuesFiltered.clear()
+        else:
+            printSerialTitles(ardtitles)
+            #have to remove last item in ardtitles as it is \n
+            showOutputSingleLine(sensorValue[:len(ardtitles[:-1])])
